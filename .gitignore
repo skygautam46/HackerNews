@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/hackernewswebapp.client/obj/Debug
+/HackerNewsWebApp.Server/bin/Debug/net8.0
+/HackerNewsWebApp.Server/obj
+/HackerNewsWebApp.Test/bin/Debug/net8.0/cs
+/HackerNewsWebApp.Test/bin/Debug/net8.0
+/HackerNewsWebApp.Test/obj/Debug/net8.0
+/HackerNewsWebApp.Test/obj/Release/net8.0
+/HackerNewsWebApp.Test/obj
+/HackerNewsWebApp.Test/bin/Release/net8.0
+/HackerNewsWebApp.Core/obj/Debug/net8.0
+/HackerNewsWebApp.Core/obj
+/.vs
+/HackerNewsWebApp.Core/bin/Debug/net8.0
