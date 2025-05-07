@@ -4,13 +4,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table'
 import { Observable } from 'rxjs';
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
-
 interface HackerNewsStory {
   title: string;
   by: string;
@@ -23,13 +16,13 @@ interface HackerNewsStory {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
   public hackerNewsStories: HackerNewsStory[] = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   obs: Observable<any> | undefined;
   dataSource: MatTableDataSource<HackerNewsStory> = new MatTableDataSource<HackerNewsStory>(this.hackerNewsStories);
-  
+  displayedColumns: string[] = ['sno', 'title', 'created_by', 'url'];
+
   constructor(private http: HttpClient, private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit() {
@@ -56,7 +49,7 @@ export class AppComponent implements OnInit {
           this.hackerNewsStories = result;
           this.dataSource.data = this.hackerNewsStories;
           setTimeout(() => {
-            this.dataSource.paginator = this.paginator;
+            //this.dataSource.paginator = this.paginator;
             this.obs = this.dataSource.connect();
           });
         },
@@ -72,15 +65,9 @@ export class AppComponent implements OnInit {
     window.open(url, "_blank");
   }
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  ngAfterViewInit() {
+    this.dataSource.data = this.hackerNewsStories;
+    this.dataSource.paginator = this.paginator;
   }
 
   title = 'hackernewswebapp.client';

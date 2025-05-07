@@ -1,22 +1,24 @@
-﻿:host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+.container{
+    margin:5%;
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
 }
 
-table {
-    margin: 0 auto;
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
 }
 
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
 
-.mat-mdc-card {
-    position: relative;
-    margin: 10px;
-    max-width: 30%;
-    width: 100%;
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
 }

@@ -1,41 +1,40 @@
-﻿<p *ngIf="!hackerNewsStories"><em>Loading...</em></p>
-<div *ngIf="hackerNewsStories">
+<p *ngIf="!hackerNewsStories"><em>Loading...</em></p>
+<div class="container" *ngIf="hackerNewsStories">
   <form>
     <mat-form-field>
       <input matInput placeholder="Search" (keyup)="search($event)">
     </mat-form-field>
   </form>
-  <mat-card *ngFor="let story of obs | async" (click)="open(story.url)">
-    <mat-card-content>
-      <mat-card-title>{{ story.title }}</mat-card-title>
-      <mat-card-subtitle>by {{ story.by }}</mat-card-subtitle>
-    </mat-card-content>
-  </mat-card>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+  <div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- SNO Column -->
+      <ng-container matColumnDef="sno">
+        <th mat-header-cell *matHeaderCellDef> Sr No. </th>
+        <td mat-cell *matCellDef="let element; let i = index">{{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}</td>
+      </ng-container>
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <!-- Created By Column -->
+      <ng-container matColumnDef="created_by">
+        <th mat-header-cell *matHeaderCellDef> Created By </th>
+        <td mat-cell *matCellDef="let element"> {{element.by}} </td>
+      </ng-container>
+
+      <!-- URL Column -->
+      <ng-container matColumnDef="url">
+        <th mat-header-cell *matHeaderCellDef> URL </th>
+        <td mat-cell *matCellDef="let element"> <a href="{{element.url}}" target="_blank">{{element.url}}</a> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" #paginatorRef></mat-paginator>
+  </div>
 </div>
-
-
-<!-- <h1 id="tableLabel">Weather forecast</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
-
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
-
-<table *ngIf="forecasts">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
-</table> -->
