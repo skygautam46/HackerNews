@@ -27,44 +27,8 @@ namespace HackerNewsWebApp.Server.Controllers
         [HttpGet(Name = "GetHackerNews")]
         public async Task<List<HackerNews>> Get(string? searchTerm)
         {
-            List<HackerNews> stories = new List<HackerNews>();
-
-            var response = await _hackerRepository.BestStoriesAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                var storiesResponse = response.Content.ReadAsStringAsync().Result;
-                var bestIds = JsonConvert.DeserializeObject<List<int>>(storiesResponse);
-
-                var tasks = bestIds.Select(GetStoryAsync);
-                stories = (await Task.WhenAll(tasks)).ToList();
-
-                if (!String.IsNullOrEmpty(searchTerm))
-                {
-                    var search = searchTerm.ToLower();
-                    stories = stories.Where(s =>
-                                       s.Title.ToLower().IndexOf(search) > -1 || s.By.ToLower().IndexOf(search) > -1)
-                                       .ToList();
-                }
-            }
-            return stories;
-        }
-
-        private async Task<HackerNews?> GetStoryAsync(int storyId)
-        {
-            return await _cacheRepository.GetOrCreateAsync<HackerNews>(storyId,
-                async cacheEntry =>
-                {
-                    HackerNews? story = new HackerNews();
-
-                    var response = await _hackerRepository.GetStoryByIdAsync(storyId);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var storyResponse = response.Content.ReadAsStringAsync().Result;
-                        story = JsonConvert.DeserializeObject<HackerNews>(storyResponse);
-                    }
-
-                    return story;
-                });
+            var response = await _hackerRepository.GetFilteredStory(searchTerm);
+            return response;
         }
     }
 }

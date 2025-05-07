@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HackerNewsWebApp.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace HackerNewsWebApp.Core.Interfaces
 {
     public interface IHackerNewsRepository
     {
-        Task<HttpResponseMessage> BestStoriesAsync();
-        Task<HttpResponseMessage> GetStoryByIdAsync(int id);
+        Task<List<HackerNews>> GetFilteredStory(string? searchTerm);
+        Task<HackerNews?> GetStoryAsync(int storyId);
     }
 }
